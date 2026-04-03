@@ -11,9 +11,13 @@ interface BlueDotProps {
   visible: boolean
   /** 點擊事件處理 */
   onClick: () => void
+  /** 頂部座標 */
+  top: number
+  /** 左側座標 */
+  left: number
 }
 
-const BlueDot: React.FC<BlueDotProps> = ({ visible, onClick }) => {
+const BlueDot: React.FC<BlueDotProps> = ({ visible, onClick, top, left }) => {
   if (!visible) return null
 
   return (
@@ -21,20 +25,20 @@ const BlueDot: React.FC<BlueDotProps> = ({ visible, onClick }) => {
       onClick={onClick}
       style={{
         position: "fixed",
-        top: "16px",
-        right: "16px",
-        width: "20px",
-        height: "20px",
+        top: `${top}px`,
+        left: `${left}px`,
+        width: "24px",
+        height: "24px",
         borderRadius: "50%",
         backgroundColor: "#3b82f6",
         border: "2px solid #ffffff",
-        boxShadow:
-          "0 2px 8px rgba(59, 130, 246, 0.5), 0 0 0 1px rgba(59, 130, 246, 0.3)",
+        boxShadow: "0 4px 12px rgba(59, 130, 246, 0.4)",
         cursor: "pointer",
         zIndex: 2147483646,
         padding: 0,
-        transition: "all 0.2s ease",
-        animation: "blueDotFadeIn 0.2s ease-in-out"
+        transition:
+          "transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease",
+        animation: "blueDotFadeIn 0.3s ease-in-out"
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.transform = "scale(1.3)"
