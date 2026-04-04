@@ -32,14 +32,44 @@ export interface PluginSettings {
   languageConfigs: Record<SourceLanguage, LanguageSettings>
 }
 
+/**
+ * 豐富的翻譯結果結構 (例如：劍橋詞典)
+ */
+export interface RichTranslation {
+  /** 詞性 (e.g. noun, verb, adjective) */
+  pos?: string
+  /** 發音資訊 (UK/US) */
+  pronunciations?: Array<{
+    type: "UK" | "US"
+    ipa: string
+    audioUrl?: string
+  }>
+  /** 定義內容 */
+  definitions: Array<{
+    /** 英文定義描述 */
+    englishDefinition?: string
+    /** 中文翻譯 */
+    chineseTranslation: string
+  }>
+  /** 例句清單 */
+  examples?: Array<{
+    /** 英文例句 */
+    original: string
+    /** 中文翻譯 */
+    translation?: string
+  }>
+  /** 如果抓取失敗，提供 iframe 嵌入的 URL */
+  iframeUrl?: string
+}
+
 /** 單一翻譯工具的翻譯結果 */
 export interface TranslationResult {
   /** 工具 ID */
   toolId: TranslationToolId
   /** 工具顯示名稱 */
   toolName: string
-  /** 翻譯結果文字 */
-  result: string
+  /** 翻譯結果（可以是純文字或結構化資料） */
+  result: string | RichTranslation
   /** 是否正在載入翻譯 */
   isLoading: boolean
   /** 錯誤訊息（若有） */
@@ -62,7 +92,7 @@ export interface TranslateRequest {
 /** 翻譯回應（從 Background SW 回傳） */
 export interface TranslateResponse {
   /** 翻譯結果 */
-  result?: string
+  result?: string | RichTranslation
   /** 錯誤訊息 */
   error?: string
 }

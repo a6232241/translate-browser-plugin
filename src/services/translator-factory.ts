@@ -3,7 +3,7 @@
  * 根據工具 ID 分派到對應的翻譯服務
  */
 
-import type { SourceLanguage, TranslationToolId } from "~src/types"
+import type { RichTranslation, SourceLanguage, TranslationToolId } from "~src/types"
 
 import { translateWithCambridge } from "./cambridge"
 import { translateWithGoogle } from "./google-translate"
@@ -15,13 +15,13 @@ import { translateWithGoogle } from "./google-translate"
  * @param toolId - 翻譯工具 ID
  * @param text - 要翻譯的文字
  * @param from - 來源語言
- * @returns 翻譯結果文字
+ * @returns 翻譯結果文字或豐富結構
  */
 export async function translateText(
   toolId: TranslationToolId,
   text: string,
   from: SourceLanguage
-): Promise<string> {
+): Promise<string | RichTranslation> {
   switch (toolId) {
     case "cambridge":
       return translateWithCambridge(text)
