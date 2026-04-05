@@ -23,41 +23,13 @@ const BlueDot: React.FC<BlueDotProps> = ({ visible, onClick, top, left }) => {
   return (
     <button
       onClick={onClick}
+      className="tp-fixed tp-w-6 tp-h-6 tp-rounded-full tp-bg-blue-500 tp-border-2 tp-border-solid tp-border-white tp-shadow-dot tp-cursor-pointer tp-z-[2147483646] tp-p-0 tp-transition-all tp-duration-200 tp-ease-[cubic-bezier(0.175,0.885,0.32,1.275)] tp-animate-fade-in hover:tp-scale-125 hover:tp-shadow-dot-hover"
       style={{
-        position: "fixed",
         top: `${top}px`,
-        left: `${left}px`,
-        width: "24px",
-        height: "24px",
-        borderRadius: "50%",
-        backgroundColor: "#3b82f6",
-        border: "2px solid #ffffff",
-        boxShadow: "0 4px 12px rgba(59, 130, 246, 0.4)",
-        cursor: "pointer",
-        zIndex: 2147483646,
-        padding: 0,
-        transition:
-          "transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease",
-        animation: "blueDotFadeIn 0.3s ease-in-out"
+        left: `${left}px`
       }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = "scale(1.3)"
-        e.currentTarget.style.boxShadow =
-          "0 4px 12px rgba(59, 130, 246, 0.6), 0 0 0 2px rgba(59, 130, 246, 0.4)"
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = "scale(1)"
-        e.currentTarget.style.boxShadow =
-          "0 2px 8px rgba(59, 130, 246, 0.5), 0 0 0 1px rgba(59, 130, 246, 0.3)"
-      }}
-      title="點擊翻譯選取的文字">
-      <style>{`
-        @keyframes blueDotFadeIn {
-          from { opacity: 0; transform: scale(0.5); }
-          to { opacity: 1; transform: scale(1); }
-        }
-      `}</style>
-    </button>
+      title="點擊翻譯選取的文字"
+    />
   )
 }
 

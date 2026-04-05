@@ -24,50 +24,18 @@ const LanguageDropdown: React.FC<LanguageDropdownProps> = ({
   label
 }) => {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+    <div className="tp-flex tp-flex-col tp-gap-1.5 tp-font-sans">
       {label && (
-        <label
-          style={{
-            fontSize: "12px",
-            fontWeight: 600,
-            color: "#6b7280",
-            textTransform: "uppercase",
-            letterSpacing: "0.05em",
-            fontFamily: "'Inter', 'Noto Sans TC', sans-serif"
-          }}>
+        <label className="tp-text-[11px] tp-font-bold tp-text-gray-400 tp-uppercase tp-tracking-wider">
           {label}
         </label>
       )}
       <select
         value={value}
         onChange={(e) => onChange(e.target.value as SourceLanguage)}
+        className="tp-p-2 tp-px-3 tp-pr-10 tp-rounded-lg tp-border tp-border-solid tp-border-gray-300 tp-bg-white tp-text-sm tp-text-gray-800 tp-cursor-pointer tp-outline-none tp-transition-all tp-duration-150 tp-shadow-sm tp-appearance-none tp-bg-no-repeat tp-bg-[right_10px_center] tp-bg-[length:18px] focus:tp-border-blue-500 focus:tp-ring-4 focus:tp-ring-blue-500/15"
         style={{
-          padding: "8px 12px",
-          borderRadius: "8px",
-          border: "1px solid #d1d5db",
-          backgroundColor: "#ffffff",
-          fontSize: "14px",
-          color: "#1f2937",
-          fontFamily: "'Inter', 'Noto Sans TC', sans-serif",
-          cursor: "pointer",
-          outline: "none",
-          transition: "all 0.15s ease",
-          boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
-          appearance: "none",
-          backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
-          backgroundPosition: "right 8px center",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "20px",
-          paddingRight: "36px"
-        }}
-        onFocus={(e) => {
-          e.currentTarget.style.borderColor = "#3b82f6"
-          e.currentTarget.style.boxShadow =
-            "0 0 0 3px rgba(59, 130, 246, 0.15)"
-        }}
-        onBlur={(e) => {
-          e.currentTarget.style.borderColor = "#d1d5db"
-          e.currentTarget.style.boxShadow = "0 1px 2px rgba(0, 0, 0, 0.05)"
+          backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`
         }}>
         {SUPPORTED_LANGUAGES.map((lang) => (
           <option key={lang.id} value={lang.id}>

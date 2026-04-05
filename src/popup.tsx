@@ -19,64 +19,26 @@ const PopupPage: React.FC = () => {
 
   if (!isLoaded) {
     return (
-      <div
-        style={{
-          width: "280px",
-          padding: "24px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          fontFamily: "'Inter', 'Noto Sans TC', sans-serif",
-          color: "#9ca3af"
-        }}>
+      <div className="tp-w-[280px] tp-p-6 tp-flex tp-justify-center tp-items-center tp-font-sans tp-text-gray-400">
         載入中...
       </div>
     )
   }
 
   return (
-    <div
-      style={{
-        width: "280px",
-        padding: "20px",
-        fontFamily: "'Inter', 'Noto Sans TC', sans-serif"
-      }}>
+    <div className="tp-w-[280px] tp-p-5 tp-font-sans">
       {/* 標題 */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "10px",
-          marginBottom: "20px"
-        }}>
-        <div
-          style={{
-            width: "28px",
-            height: "28px",
-            borderRadius: "6px",
-            background: "linear-gradient(135deg, #3b82f6, #1d4ed8)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "14px",
-            color: "#ffffff",
-            fontWeight: 700
-          }}>
+      <div className="tp-flex tp-items-center tp-gap-2.5 tp-mb-5">
+        <div className="tp-w-7 tp-h-7 tp-rounded-md tp-bg-gradient-to-br tp-from-blue-500 tp-to-blue-700 tp-flex tp-items-center tp-justify-center tp-text-sm tp-text-white tp-font-bold">
           譯
         </div>
-        <h1
-          style={{
-            fontSize: "16px",
-            fontWeight: 700,
-            color: "#111827",
-            margin: 0
-          }}>
+        <h1 className="tp-text-base tp-font-bold tp-text-gray-900 tp-m-0">
           翻譯插件
         </h1>
       </div>
 
       {/* 語言快速切換 */}
-      <div style={{ marginBottom: "16px" }}>
+      <div className="tp-mb-4">
         <LanguageDropdown
           value={settings.currentLanguage}
           onChange={setCurrentLanguage}
@@ -85,57 +47,18 @@ const PopupPage: React.FC = () => {
       </div>
 
       {/* 分隔線 */}
-      <div
-        style={{
-          height: "1px",
-          backgroundColor: "#f3f4f6",
-          margin: "12px 0"
-        }}
-      />
+      <div className="tp-h-px tp-bg-gray-100 tp-my-3" />
 
       {/* 設定頁按鈕 */}
       <button
         onClick={() => chrome.runtime.openOptionsPage()}
-        style={{
-          width: "100%",
-          padding: "10px 14px",
-          borderRadius: "8px",
-          border: "1px solid #e5e7eb",
-          backgroundColor: "#ffffff",
-          fontSize: "13px",
-          color: "#374151",
-          fontFamily: "'Inter', 'Noto Sans TC', sans-serif",
-          fontWeight: 500,
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          transition: "all 0.15s ease",
-          boxShadow: "0 1px 2px rgba(0, 0, 0, 0.04)"
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.backgroundColor = "#f9fafb"
-          e.currentTarget.style.borderColor = "#d1d5db"
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.backgroundColor = "#ffffff"
-          e.currentTarget.style.borderColor = "#e5e7eb"
-        }}>
-        <span style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          ⚙️ 進階設定
-        </span>
-        <span style={{ color: "#9ca3af", fontSize: "14px" }}>→</span>
+        className="tp-w-full tp-p-2.5 tp-px-3.5 tp-rounded-lg tp-border tp-border-solid tp-border-gray-200 tp-bg-white tp-text-[13px] tp-font-medium tp-text-gray-700 tp-flex tp-items-center tp-justify-between tp-transition-all tp-duration-150 tp-shadow-sm hover:tp-bg-gray-50 hover:tp-border-gray-300 tp-cursor-pointer">
+        <span className="tp-flex tp-items-center tp-gap-2">⚙️ 進階設定</span>
+        <span className="tp-text-gray-400 tp-text-sm">→</span>
       </button>
 
       {/* 提示 */}
-      <p
-        style={{
-          fontSize: "11px",
-          color: "#d1d5db",
-          textAlign: "center",
-          marginTop: "16px",
-          marginBottom: 0
-        }}>
+      <p className="tp-text-[11px] tp-text-gray-300 tp-text-center tp-mt-4 tp-mb-0">
         選取網頁文字後，點擊藍色小點即可翻譯
       </p>
     </div>

@@ -8,6 +8,13 @@ import { useTextSelection } from "~src/hooks/useTextSelection"
 import { useTranslation } from "~src/hooks/useTranslation"
 import type { DrawerPosition } from "~src/types"
 import { DRAWER_SIZE } from "~src/utils/constants"
+import cssText from "data-text:~styles/globals.css"
+
+export const getStyle = () => {
+  const style = document.createElement("style")
+  style.textContent = cssText
+  return style
+}
 
 /** Content Script 設定 */
 export const config: PlasmoCSConfig = {

@@ -15,28 +15,14 @@ const SyncSpinner: React.FC<SyncSpinnerProps> = ({ visible }) => {
   if (!visible) return null
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: "16px",
-        left: "16px",
-        display: "flex",
-        alignItems: "center",
-        gap: "8px",
-        padding: "6px 12px",
-        borderRadius: "20px",
-        backgroundColor: "rgba(59, 130, 246, 0.1)",
-        border: "1px solid rgba(59, 130, 246, 0.2)",
-        zIndex: 1000,
-        animation: "spinnerFadeIn 0.2s ease"
-      }}>
+    <div className="tp-fixed tp-top-4 tp-left-4 tp-flex tp-items-center tp-gap-2 tp-p-1.5 tp-px-3 tp-rounded-full tp-bg-blue-500/10 tp-border tp-border-solid tp-border-blue-500/20 tp-z-[1000] tp-animate-fade-in tp-font-sans">
       {/* Spinner SVG 動畫 */}
       <svg
         width="14"
         height="14"
         viewBox="0 0 24 24"
         fill="none"
-        style={{ animation: "spinnerRotate 1s linear infinite" }}>
+        className="tp-animate-spin">
         <circle
           cx="12"
           cy="12"
@@ -49,26 +35,9 @@ const SyncSpinner: React.FC<SyncSpinnerProps> = ({ visible }) => {
         />
       </svg>
 
-      <span
-        style={{
-          fontSize: "11px",
-          color: "#3b82f6",
-          fontWeight: 500,
-          fontFamily: "'Inter', 'Noto Sans TC', sans-serif"
-        }}>
+      <span className="tp-text-[11px] tp-text-blue-500 tp-font-medium">
         儲存中...
       </span>
-
-      <style>{`
-        @keyframes spinnerRotate {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        @keyframes spinnerFadeIn {
-          from { opacity: 0; transform: translateY(-4px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
     </div>
   )
 }

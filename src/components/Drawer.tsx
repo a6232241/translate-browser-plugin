@@ -28,114 +28,41 @@ const Drawer: React.FC<DrawerProps> = ({
   selectedText,
   onClose
 }) => {
-  /** 根據 position 計算容器樣式 */
-  const containerStyle: React.CSSProperties =
-    position === "right"
-      ? {
-          position: "fixed",
-          top: 0,
-          right: 0,
-          width: `${DRAWER_SIZE}px`,
-          height: "100vh",
-          zIndex: 2147483647,
-          display: "flex",
-          flexDirection: "column",
-          backgroundColor: "#ffffff",
-          borderLeft: "1px solid #e5e7eb",
-          boxShadow: "-4px 0 24px rgba(0, 0, 0, 0.08)",
-          animation: "slideInRight 0.3s ease-out"
-        }
-      : {
-          position: "fixed",
-          bottom: 0,
-          left: 0,
-          width: "100vw",
-          height: `${DRAWER_SIZE}px`,
-          zIndex: 2147483647,
-          display: "flex",
-          flexDirection: "column",
-          backgroundColor: "#ffffff",
-          borderTop: "1px solid #e5e7eb",
-          boxShadow: "0 -4px 24px rgba(0, 0, 0, 0.08)",
-          animation: "slideInBottom 0.3s ease-out"
-        }
+  const isRight = position === "right"
 
   return (
-    <div style={containerStyle}>
+    <div
+      className={`tp-fixed tp-z-[2147483647] tp-flex tp-flex-col tp-bg-white tp-border-solid tp-font-sans ${
+        isRight
+          ? "tp-top-0 tp-right-0 tp-h-screen tp-border-l tp-border-gray-200 tp-shadow-drawer-right tp-animate-slide-in-right"
+          : "tp-bottom-0 tp-left-0 tp-w-screen tp-border-t tp-border-gray-200 tp-shadow-drawer-bottom tp-animate-slide-in-bottom"
+      }`}
+      style={{
+        width: isRight ? `${DRAWER_SIZE}px` : "100vw",
+        height: isRight ? "100vh" : `${DRAWER_SIZE}px`
+      }}>
       {/* 標題列：關閉按鈕 + 選取文字 */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          padding: "10px 12px",
-          borderBottom: "1px solid #e5e7eb",
-          backgroundColor: "#f8fafc",
-          flexShrink: 0
-        }}>
+      <div className="tp-flex tp-items-center tp-p-2.5 tp-px-3 tp-border-b tp-border-solid tp-border-gray-200 tp-bg-slate-50 tp-flex-shrink-0">
         {/* 關閉按鈕 (左上角叉叉) */}
         <button
           onClick={onClose}
-          style={{
-            width: "28px",
-            height: "28px",
-            borderRadius: "6px",
-            border: "none",
-            backgroundColor: "transparent",
-            color: "#6b7280",
-            fontSize: "16px",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexShrink: 0,
-            transition: "all 0.15s ease"
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = "#fee2e2"
-            e.currentTarget.style.color = "#ef4444"
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = "transparent"
-            e.currentTarget.style.color = "#6b7280"
-          }}
+          className="tp-w-7 tp-h-7 tp-rounded-md tp-border-none tp-bg-transparent tp-text-gray-400 tp-text-base tp-cursor-pointer tp-flex tp-items-center tp-justify-center tp-flex-shrink-0 tp-transition-all tp-duration-150 hover:tp-bg-red-100 hover:tp-text-red-500"
           title="關閉翻譯面板">
           ✕
         </button>
 
         {/* 選取的文字 */}
         <div
-          style={{
-            marginLeft: "8px",
-            flex: 1,
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-            fontSize: "13px",
-            fontWeight: 600,
-            color: "#374151",
-            fontFamily: "'Inter', 'Noto Sans TC', sans-serif"
-          }}
+          className="tp-ml-2 tp-flex-1 tp-overflow-hidden tp-text-ellipsis tp-whitespace-nowrap tp-text-[13px] tp-font-semibold tp-text-gray-700 tp-font-sans"
           title={selectedText}>
           {selectedText}
         </div>
       </div>
 
       {/* 翻譯結果列表（可滾動區域） */}
-      <div
-        style={{
-          flex: 1,
-          overflowY: "auto",
-          overflowX: "hidden"
-        }}>
+      <div className="tp-flex-1 tp-overflow-y-auto tp-overflow-x-hidden">
         {results.length === 0 ? (
-          <div
-            style={{
-              padding: "24px 16px",
-              textAlign: "center",
-              color: "#9ca3af",
-              fontSize: "13px",
-              fontFamily: "'Noto Sans TC', sans-serif"
-            }}>
+          <div className="tp-p-6 tp-px-4 tp-text-center tp-text-[#9ca3af] tp-text-[13px] tp-font-sans">
             沒有可用的翻譯工具，請至設定頁選取翻譯工具
           </div>
         ) : (
@@ -148,22 +75,6 @@ const Drawer: React.FC<DrawerProps> = ({
           ))
         )}
       </div>
-
-      {/* 樣式定義（keyframes 動畫） */}
-      <style>{`
-        @keyframes slideInRight {
-          from { transform: translateX(100%); }
-          to { transform: translateX(0); }
-        }
-        @keyframes slideInBottom {
-          from { transform: translateY(100%); }
-          to { transform: translateY(0); }
-        }
-        @keyframes shimmer {
-          0% { background-position: 200% 0; }
-          100% { background-position: -200% 0; }
-        }
-      `}</style>
     </div>
   )
 }

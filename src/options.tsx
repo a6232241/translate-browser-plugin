@@ -40,118 +40,48 @@ const OptionsPage: React.FC = () => {
 
   if (!isLoaded) {
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          fontFamily: "'Inter', 'Noto Sans TC', sans-serif",
-          color: "#9ca3af"
-        }}>
+      <div className="tp-flex tp-justify-center tp-items-center tp-h-screen tp-font-sans tp-text-gray-400">
         載入中...
       </div>
     )
   }
 
   return (
-    <div
-      style={{
-        maxWidth: "640px",
-        margin: "0 auto",
-        padding: "32px 24px",
-        fontFamily: "'Inter', 'Noto Sans TC', sans-serif"
-      }}>
+    <div className="tp-max-w-[640px] tp-mx-auto tp-p-8 tp-px-6 tp-font-sans">
       {/* 儲存中 Spinner */}
       <SyncSpinner visible={isSaving} />
 
       {/* 頁面標題 */}
-      <div style={{ marginBottom: "32px" }}>
-        <h1
-          style={{
-            fontSize: "24px",
-            fontWeight: 700,
-            color: "#111827",
-            marginBottom: "8px",
-            display: "flex",
-            alignItems: "center",
-            gap: "10px"
-          }}>
-          <span
-            style={{
-              width: "32px",
-              height: "32px",
-              borderRadius: "8px",
-              background: "linear-gradient(135deg, #3b82f6, #1d4ed8)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "16px",
-              color: "#ffffff"
-            }}>
+      <div className="tp-mb-8">
+        <h1 className="tp-text-2xl tp-font-bold tp-text-gray-900 tp-mb-2 tp-flex tp-items-center tp-gap-2.5">
+          <span className="tp-w-8 tp-h-8 tp-rounded-lg tp-bg-gradient-to-br tp-from-blue-500 tp-to-blue-700 tp-flex tp-items-center tp-justify-center tp-text-base tp-text-white tp-font-bold">
             譯
           </span>
           翻譯插件設定
         </h1>
-        <p
-          style={{
-            fontSize: "14px",
-            color: "#6b7280",
-            margin: 0
-          }}>
+        <p className="tp-text-sm tp-text-gray-500 tp-m-0">
           設定翻譯來源語言和翻譯工具。所有變更將自動同步至您的 Edge 帳號。
         </p>
       </div>
 
       {/* 語言選擇區 */}
-      <div
-        style={{
-          marginBottom: "28px",
-          padding: "20px",
-          borderRadius: "12px",
-          backgroundColor: "#f9fafb",
-          border: "1px solid #e5e7eb"
-        }}>
+      <div className="tp-mb-7 tp-p-5 tp-rounded-xl tp-bg-gray-50 tp-border tp-border-solid tp-border-gray-200">
         <LanguageDropdown
           value={settings.currentLanguage}
           onChange={setCurrentLanguage}
           label="翻譯來源語言"
         />
-        <p
-          style={{
-            fontSize: "12px",
-            color: "#9ca3af",
-            marginTop: "8px",
-            marginBottom: 0
-          }}>
+        <p className="tp-text-xs tp-text-gray-400 tp-mt-2 tp-mb-0">
           目標語言固定為<strong>繁體中文</strong>
         </p>
       </div>
 
       {/* 翻譯工具選擇器 */}
-      <div
-        style={{
-          padding: "20px",
-          borderRadius: "12px",
-          backgroundColor: "#ffffff",
-          border: "1px solid #e5e7eb",
-          boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04)"
-        }}>
-        <h2
-          style={{
-            fontSize: "16px",
-            fontWeight: 600,
-            color: "#374151",
-            marginBottom: "16px"
-          }}>
+      <div className="tp-p-5 tp-rounded-xl tp-bg-white tp-border tp-border-solid tp-border-gray-200 tp-shadow-sm">
+        <h2 className="tp-text-base tp-font-semibold tp-text-gray-700 tp-mb-4">
           翻譯工具管理
         </h2>
-        <p
-          style={{
-            fontSize: "12px",
-            color: "#9ca3af",
-            marginBottom: "16px"
-          }}>
+        <p className="tp-text-xs tp-text-gray-400 tp-mb-4">
           點擊工具可在兩欄間移動，拖曳可調整已選工具的排序。
         </p>
         <ToolSelector
@@ -162,19 +92,8 @@ const OptionsPage: React.FC = () => {
       </div>
 
       {/* 頁腳 */}
-      <div
-        style={{
-          marginTop: "32px",
-          padding: "16px 0",
-          borderTop: "1px solid #f3f4f6",
-          textAlign: "center"
-        }}>
-        <p
-          style={{
-            fontSize: "11px",
-            color: "#d1d5db",
-            margin: 0
-          }}>
+      <div className="tp-mt-8 tp-p-4 tp-border-t tp-border-solid tp-border-gray-100 tp-text-center">
+        <p className="tp-text-[11px] tp-text-gray-300 tp-m-0">
           翻譯瀏覽器插件 v0.0.1 ｜ 變更將在 3 秒後自動儲存
         </p>
       </div>

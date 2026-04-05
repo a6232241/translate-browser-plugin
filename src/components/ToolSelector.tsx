@@ -53,7 +53,7 @@ const SortableToolCard: React.FC<{
     isDragging
   } = useSortable({ id })
 
-  const style: React.CSSProperties = {
+  const dndStyle: React.CSSProperties = {
     transform: CSS.Transform.toString(transform),
     transition,
     opacity: isDragging ? 0.4 : 1
@@ -62,41 +62,16 @@ const SortableToolCard: React.FC<{
   return (
     <div
       ref={setNodeRef}
-      style={{
-        ...style,
-        padding: "10px 14px",
-        borderRadius: "8px",
-        border: "1px solid #e5e7eb",
-        backgroundColor: "#ffffff",
-        cursor: "grab",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        gap: "8px",
-        marginBottom: "6px",
-        transition: "all 0.15s ease",
-        boxShadow: "0 1px 2px rgba(0, 0, 0, 0.04)"
-      }}
+      className="tp-p-2.5 tp-px-3.5 tp-rounded-lg tp-border tp-border-solid tp-border-gray-200 tp-bg-white tp-shadow-sm tp-flex tp-items-center tp-justify-between tp-gap-2 tp-mb-1.5 tp-transition-all tp-duration-150 tp-cursor-grab tp-font-sans"
+      style={dndStyle}
       {...attributes}
       {...listeners}>
       {/* 拖曳把手 */}
-      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-        <span
-          style={{
-            color: "#d1d5db",
-            fontSize: "14px",
-            lineHeight: 1,
-            cursor: "grab"
-          }}>
+      <div className="tp-flex tp-items-center tp-gap-2.5">
+        <span className="tp-text-gray-300 tp-text-sm tp-leading-none tp-cursor-grab">
           ⠿
         </span>
-        <span
-          style={{
-            fontSize: "13px",
-            color: "#374151",
-            fontFamily: "'Inter', 'Noto Sans TC', sans-serif",
-            fontWeight: 500
-          }}>
+        <span className="tp-text-[13px] tp-font-medium tp-text-gray-700">
           {name}
         </span>
       </div>
@@ -108,29 +83,7 @@ const SortableToolCard: React.FC<{
           onClick()
         }}
         onPointerDown={(e) => e.stopPropagation()}
-        style={{
-          width: "24px",
-          height: "24px",
-          borderRadius: "4px",
-          border: "none",
-          backgroundColor: "transparent",
-          color: "#9ca3af",
-          fontSize: "14px",
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexShrink: 0,
-          transition: "all 0.15s ease"
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.backgroundColor = "#f3f4f6"
-          e.currentTarget.style.color = "#374151"
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.backgroundColor = "transparent"
-          e.currentTarget.style.color = "#9ca3af"
-        }}
+        className="tp-w-6 tp-h-6 tp-rounded tp-border-none tp-bg-transparent tp-text-gray-400 tp-text-sm tp-flex tp-items-center tp-justify-center tp-flex-shrink-0 tp-transition-all tp-duration-150 hover:tp-bg-gray-100 hover:tp-text-gray-700 tp-cursor-pointer"
         title="點擊移動">
         ↔
       </button>
@@ -146,38 +99,11 @@ const StaticToolCard: React.FC<{
   return (
     <div
       onClick={onClick}
-      style={{
-        padding: "10px 14px",
-        borderRadius: "8px",
-        border: "1px solid #e5e7eb",
-        backgroundColor: "#ffffff",
-        cursor: "pointer",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        gap: "8px",
-        marginBottom: "6px",
-        transition: "all 0.15s ease",
-        boxShadow: "0 1px 2px rgba(0, 0, 0, 0.04)"
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.backgroundColor = "#eff6ff"
-        e.currentTarget.style.borderColor = "#bfdbfe"
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.backgroundColor = "#ffffff"
-        e.currentTarget.style.borderColor = "#e5e7eb"
-      }}>
-      <span
-        style={{
-          fontSize: "13px",
-          color: "#374151",
-          fontFamily: "'Inter', 'Noto Sans TC', sans-serif",
-          fontWeight: 500
-        }}>
+      className="tp-p-2.5 tp-px-3.5 tp-rounded-lg tp-border tp-border-solid tp-border-gray-200 tp-bg-white tp-shadow-sm tp-flex tp-items-center tp-justify-between tp-gap-2 tp-mb-1.5 tp-transition-all tp-duration-150 tp-cursor-pointer hover:tp-bg-blue-50 hover:tp-border-blue-200 tp-font-sans">
+      <span className="tp-text-[13px] tp-font-medium tp-text-gray-700">
         {name}
       </span>
-      <span style={{ fontSize: "14px", color: "#9ca3af" }}>→</span>
+      <span className="tp-text-sm tp-text-gray-400">→</span>
     </div>
   )
 }
@@ -185,26 +111,9 @@ const StaticToolCard: React.FC<{
 /** 拖曳中的重疊顯示卡片 */
 const DragOverlayCard: React.FC<{ name: string }> = ({ name }) => {
   return (
-    <div
-      style={{
-        padding: "10px 14px",
-        borderRadius: "8px",
-        border: "1px solid #3b82f6",
-        backgroundColor: "#eff6ff",
-        display: "flex",
-        alignItems: "center",
-        gap: "10px",
-        boxShadow: "0 8px 24px rgba(59, 130, 246, 0.2)",
-        cursor: "grabbing"
-      }}>
-      <span style={{ color: "#3b82f6", fontSize: "14px" }}>⠿</span>
-      <span
-        style={{
-          fontSize: "13px",
-          color: "#1e40af",
-          fontFamily: "'Inter', 'Noto Sans TC', sans-serif",
-          fontWeight: 600
-        }}>
+    <div className="tp-p-2.5 tp-px-3.5 tp-rounded-lg tp-border tp-border-solid tp-border-blue-500 tp-bg-blue-50 tp-flex tp-items-center tp-gap-2.5 tp-shadow-xl tp-cursor-grabbing tp-font-sans">
+      <span className="tp-text-blue-500 tp-text-sm">⠿</span>
+      <span className="tp-text-[13px] tp-font-bold tp-text-blue-800">
         {name}
       </span>
     </div>
@@ -279,38 +188,15 @@ const ToolSelector: React.FC<ToolSelectorProps> = ({
       collisionDetection={closestCenter}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}>
-      <div style={{ display: "flex", gap: "16px", minHeight: "200px" }}>
+      <div className="tp-flex tp-gap-4 tp-min-h-[200px]">
         {/* 左欄：可選的翻譯工具 */}
-        <div style={{ flex: 1 }}>
-          <h3
-            style={{
-              fontSize: "13px",
-              fontWeight: 600,
-              color: "#6b7280",
-              marginBottom: "10px",
-              fontFamily: "'Inter', 'Noto Sans TC', sans-serif",
-              textTransform: "uppercase",
-              letterSpacing: "0.05em"
-            }}>
+        <div className="tp-flex-1">
+          <h3 className="tp-text-[11px] tp-font-bold tp-text-gray-400 tp-mb-2.5 tp-uppercase tp-tracking-wider tp-font-sans">
             可選的翻譯工具
           </h3>
-          <div
-            style={{
-              padding: "8px",
-              borderRadius: "10px",
-              backgroundColor: "#f9fafb",
-              border: "1px dashed #d1d5db",
-              minHeight: "120px"
-            }}>
+          <div className="tp-p-2 tp-rounded-xl tp-bg-gray-50 tp-border tp-border-dashed tp-border-gray-300 tp-min-h-[120px]">
             {availableTools.length === 0 ? (
-              <div
-                style={{
-                  padding: "20px",
-                  textAlign: "center",
-                  color: "#9ca3af",
-                  fontSize: "12px",
-                  fontFamily: "'Noto Sans TC', sans-serif"
-                }}>
+              <div className="tp-p-5 tp-text-center tp-text-gray-400 tp-text-xs tp-font-sans">
                 所有工具已選取
               </div>
             ) : (
@@ -326,36 +212,13 @@ const ToolSelector: React.FC<ToolSelectorProps> = ({
         </div>
 
         {/* 右欄：已選的翻譯工具（可排序） */}
-        <div style={{ flex: 1 }}>
-          <h3
-            style={{
-              fontSize: "13px",
-              fontWeight: 600,
-              color: "#6b7280",
-              marginBottom: "10px",
-              fontFamily: "'Inter', 'Noto Sans TC', sans-serif",
-              textTransform: "uppercase",
-              letterSpacing: "0.05em"
-            }}>
+        <div className="tp-flex-1">
+          <h3 className="tp-text-[11px] tp-font-bold tp-text-gray-400 tp-mb-2.5 tp-uppercase tp-tracking-wider tp-font-sans">
             已選的翻譯工具
           </h3>
-          <div
-            style={{
-              padding: "8px",
-              borderRadius: "10px",
-              backgroundColor: "#f0f9ff",
-              border: "1px dashed #93c5fd",
-              minHeight: "120px"
-            }}>
+          <div className="tp-p-2 tp-rounded-xl tp-bg-blue-50/50 tp-border tp-border-dashed tp-border-blue-300 tp-min-h-[120px]">
             {selectedTools.length === 0 ? (
-              <div
-                style={{
-                  padding: "20px",
-                  textAlign: "center",
-                  color: "#9ca3af",
-                  fontSize: "12px",
-                  fontFamily: "'Noto Sans TC', sans-serif"
-                }}>
+              <div className="tp-p-5 tp-text-center tp-text-gray-400 tp-text-xs tp-font-sans">
                 請從左側選取工具
               </div>
             ) : (

@@ -1,5 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  prefix: "tp-",
+  important: true,
+  corePlugins: {
+    preflight: false
+  },
   content: [
     "./src/**/*.{ts,tsx}",
     "./*.tsx",
@@ -40,6 +45,12 @@ module.exports = {
           "0%": { transform: "translateY(100%)" },
           "100%": { transform: "translateY(0)" }
         }
+      },
+      boxShadow: {
+        dot: "0 4px 12px rgba(59, 130, 246, 0.4)",
+        "dot-hover": "0 4px 12px rgba(59, 130, 246, 0.6), 0 0 0 2px rgba(59, 130, 246, 0.4)",
+        "drawer-right": "-4px 0 24px rgba(0, 0, 0, 0.08)",
+        "drawer-bottom": "0 -4px 24px rgba(0, 0, 0, 0.08)"
       }
     }
   },

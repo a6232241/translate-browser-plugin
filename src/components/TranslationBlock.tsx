@@ -30,54 +30,19 @@ const TranslationBlock: React.FC<TranslationBlockProps> = ({
 
   return (
     <div
-      style={{
-        padding: "12px 16px",
-        borderBottom: isLast ? "none" : "1px solid #e5e7eb"
-      }}>
+      className={`tp-p-3 tp-px-4 tp-font-sans ${
+        isLast ? "" : "tp-border-b tp-border-solid tp-border-gray-100"
+      }`}>
       {/* 工具名稱標題 */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "8px"
-        }}>
-        <h3
-          style={{
-            fontSize: "13px",
-            fontWeight: 600,
-            color: "#3b82f6",
-            margin: 0,
-            fontFamily: "'Inter', 'Noto Sans TC', sans-serif",
-            letterSpacing: "0.025em",
-            display: "flex",
-            alignItems: "center",
-            gap: "6px"
-          }}>
-          <span
-            style={{
-              width: "6px",
-              height: "6px",
-              borderRadius: "50%",
-              backgroundColor: "#3b82f6",
-              display: "inline-block",
-              flexShrink: 0
-            }}
-          />
+      <div className="tp-flex tp-justify-between tp-items-center tp-mb-2">
+        <h3 className="tp-text-[13px] tp-font-bold tp-text-blue-500 tp-m-0 tp-flex tp-items-center tp-gap-1.5 tp-tracking-wide">
+          <span className="tp-w-1.5 tp-h-1.5 tp-rounded-full tp-bg-blue-500 tp-flex-shrink-0" />
           {result.toolName}
         </h3>
 
         {/* 詞性顯示 */}
         {isRich && richData?.pos && (
-          <span
-            style={{
-              fontSize: "11px",
-              fontStyle: "italic",
-              color: "#6b7280",
-              backgroundColor: "#f3f4f6",
-              padding: "2px 6px",
-              borderRadius: "4px"
-            }}>
+          <span className="tp-text-[11px] tp-italic tp-text-gray-500 tp-bg-gray-100 tp-p-0.5 tp-px-2 tp-rounded">
             {richData.pos}
           </span>
         )}
@@ -86,102 +51,51 @@ const TranslationBlock: React.FC<TranslationBlockProps> = ({
       {/* 翻譯結果內容 */}
       {result.isLoading ? (
         /* Loading 骨架動畫 */
-        <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+        <div className="tp-flex tp-flex-col tp-gap-1.5">
           {[...Array(3)].map((_, i) => (
             <div
               key={i}
-              style={{
-                height: "14px",
-                borderRadius: "4px",
-                background:
-                  "linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%)",
-                backgroundSize: "200% 100%",
-                animation: "shimmer 1.5s ease-in-out infinite",
-                width: i === 2 ? "60%" : "100%"
-              }}
+              className={`tp-h-3.5 tp-rounded tp-bg-gray-200 tp-animate-pulse ${
+                i === 2 ? "tp-w-3/5" : "tp-w-full"
+              }`}
             />
           ))}
         </div>
       ) : result.error ? (
         /* 錯誤訊息 */
-        <p
-          style={{
-            fontSize: "13px",
-            color: "#ef4444",
-            margin: 0,
-            fontFamily: "'Noto Sans TC', sans-serif",
-            lineHeight: 1.6
-          }}>
+        <p className="tp-text-[13px] tp-text-red-500 tp-m-0 tp-leading-relaxed">
           ⚠ {result.error}
         </p>
       ) : isRich ? (
         /* 豐富的翻譯結果 (或 Iframe 備援) */
         richData.iframeUrl ? (
           /* Iframe 備援顯示 */
-          <div style={{ marginTop: "4px" }}>
-            <p
-              style={{
-                fontSize: "12px",
-                color: "#6b7280",
-                marginBottom: "8px",
-                fontFamily: "'Noto Sans TC', sans-serif"
-              }}>
+          <div className="tp-mt-1">
+            <p className="tp-text-[12px] tp-text-gray-500 tp-mb-2">
               由於存取限制，已為您載入官方網頁：
             </p>
             <iframe
               src={richData.iframeUrl}
-              style={{
-                width: "100%",
-                height: "400px",
-                border: "1px solid #e5e7eb",
-                borderRadius: "8px",
-                backgroundColor: "#ffffff"
-              }}
+              className="tp-w-full tp-h-[400px] tp-border tp-border-solid tp-border-gray-200 tp-rounded-lg tp-bg-white"
               title="Cambridge Dictionary Fallback"
             />
           </div>
         ) : (
           /* 成功的結構化渲染 (詞性、音標、定義等) */
-          <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          <div className="tp-flex tp-flex-col tp-gap-2.5">
             {/* 音標與發音 */}
             {richData.pronunciations && richData.pronunciations.length > 0 && (
-              <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+              <div className="tp-flex tp-gap-3 tp-flex-wrap tp-text-[12px] tp-text-gray-600">
                 {richData.pronunciations.map((pron: any, idx: number) => (
-                  <div
-                    key={idx}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "4px",
-                      fontSize: "12px",
-                      color: "#4b5563"
-                    }}>
-                    <span style={{ fontWeight: 600, color: "#111827" }}>
+                  <div key={idx} className="tp-flex tp-items-center tp-gap-1">
+                    <span className="tp-font-bold tp-text-gray-900">
                       {pron.type}
                     </span>
-                    <span style={{ color: "#6b7280" }}>{pron.ipa}</span>
+                    <span className="tp-text-gray-500">{pron.ipa}</span>
                     {pron.audioUrl && (
                       <button
                         onClick={() => playAudio(pron.audioUrl)}
-                        style={{
-                          padding: "2px",
-                          border: "none",
-                          background: "none",
-                          cursor: "pointer",
-                          fontSize: "14px",
-                          lineHeight: 1,
-                          borderRadius: "50%",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          transition: "background-color 0.2s"
-                        }}
-                        onMouseEnter={(e) =>
-                          (e.currentTarget.style.backgroundColor = "#e5e7eb")
-                        }
-                        onMouseLeave={(e) =>
-                          (e.currentTarget.style.backgroundColor = "transparent")
-                        }
+                        className="tp-p-0.5 tp-rounded-full tp-bg-transparent tp-border-none tp-cursor-pointer tp-text-[14px] tp-flex tp-items-center tp-justify-center tp-transition-all tp-duration-200 hover:tp-bg-gray-200"
                         title="播放發音">
                         🔊
                       </button>
@@ -192,30 +106,19 @@ const TranslationBlock: React.FC<TranslationBlockProps> = ({
             )}
 
             {/* 定義清單 */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+            <div className="tp-flex tp-flex-col tp-gap-2">
               {richData.definitions.map((def: any, idx: number) => (
                 <div key={idx}>
-                  <div
-                    style={{
-                      fontSize: "13px",
-                      lineHeight: 1.6,
-                      color: "#111827"
-                    }}>
+                  <div className="tp-text-[13px] tp-leading-relaxed tp-text-gray-900">
                     {richData.definitions.length > 1 && (
-                      <span style={{ marginRight: "4px", color: "#3b82f6" }}>
+                      <span className="tp-mr-1 tp-text-blue-500 font-bold">
                         {idx + 1}.
                       </span>
                     )}
                     {def.chineseTranslation}
                   </div>
                   {def.englishDefinition && (
-                    <div
-                      style={{
-                        fontSize: "12px",
-                        color: "#6b7280",
-                        marginTop: "2px",
-                        fontStyle: "italic"
-                      }}>
+                    <div className="tp-text-[12px] tp-text-gray-400 tp-mt-0.5 tp-italic">
                       {def.englishDefinition}
                     </div>
                   )}
@@ -225,38 +128,17 @@ const TranslationBlock: React.FC<TranslationBlockProps> = ({
 
             {/* 例句區塊 */}
             {richData.examples && richData.examples.length > 0 && (
-              <div
-                style={{
-                  marginTop: "4px",
-                  padding: "8px",
-                  backgroundColor: "#f9fafb",
-                  borderRadius: "6px",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "8px"
-                }}>
-                <div
-                  style={{
-                    fontSize: "11px",
-                    fontWeight: 600,
-                    color: "#9ca3af",
-                    textTransform: "uppercase"
-                  }}>
+              <div className="tp-mt-1 tp-p-2 tp-bg-gray-50 tp-rounded-md tp-flex tp-flex-col tp-gap-2 tp-border tp-border-solid tp-border-gray-100">
+                <div className="tp-text-[10px] tp-font-bold tp-text-gray-400 tp-uppercase tp-tracking-wider">
                   範例例句
                 </div>
                 {richData.examples.map((ex: any, idx: number) => (
-                  <div
-                    key={idx}
-                    style={{
-                      fontSize: "12px",
-                      display: "flex",
-                      flexDirection: "column"
-                    }}>
-                    <div style={{ color: "#374151", lineHeight: 1.5 }}>
+                  <div key={idx} className="tp-text-[12px] tp-flex tp-flex-col">
+                    <div className="tp-text-gray-700 tp-leading-normal">
                       {ex.original}
                     </div>
                     {ex.translation && (
-                      <div style={{ color: "#6b7280", marginTop: "2px" }}>
+                      <div className="tp-text-gray-400 tp-mt-0.5">
                         {ex.translation}
                       </div>
                     )}
@@ -268,16 +150,7 @@ const TranslationBlock: React.FC<TranslationBlockProps> = ({
         )
       ) : (
         /* 純文字翻譯結果 (Google) */
-        <p
-          style={{
-            fontSize: "13px",
-            color: "#1f2937",
-            margin: 0,
-            fontFamily: "'Noto Sans TC', sans-serif",
-            lineHeight: 1.8,
-            whiteSpace: "pre-wrap",
-            wordBreak: "break-word"
-          }}>
+        <p className="tp-text-[13px] tp-text-gray-800 tp-m-0 tp-leading-loose tp-whitespace-pre-wrap tp-break-words">
           {result.result as string}
         </p>
       )}
