@@ -75,7 +75,7 @@ export const DEFAULT_SETTINGS: PluginSettings = {
 export const DRAWER_SIZE = 300
 
 /** 自動儲存的延遲時間（毫秒） */
-export const AUTO_SAVE_DELAY = 3000
+export const AUTO_SAVE_DELAY = 500
 
 /** Storage 鍵名 */
 export const STORAGE_KEY = "translate-plugin-settings"

@@ -94,7 +94,7 @@ const OptionsPage: React.FC = () => {
       {/* 頁腳 */}
       <div className="tp-mt-8 tp-p-4 tp-border-t tp-border-solid tp-border-gray-100 tp-text-center">
         <p className="tp-text-[11px] tp-text-gray-300 tp-m-0">
-          翻譯瀏覽器插件 v0.0.1 ｜ 變更將在 3 秒後自動儲存
+          翻譯瀏覽器插件 v0.0.1 ｜ 變更將在 500 毫秒後自動儲存
         </p>
       </div>
     </div>

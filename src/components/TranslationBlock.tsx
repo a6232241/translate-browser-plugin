@@ -78,6 +78,7 @@ const TranslationBlock: React.FC<TranslationBlockProps> = ({
               src={richData.iframeUrl}
               className="tp-w-full tp-h-[400px] tp-border tp-border-solid tp-border-gray-200 tp-rounded-lg tp-bg-white"
               title="Cambridge Dictionary Fallback"
+              allow="storage-access"
             />
           </div>
         ) : (

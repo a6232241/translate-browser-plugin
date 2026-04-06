@@ -33,18 +33,28 @@ const TranslatorUI: React.FC = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [drawerPosition, setDrawerPosition] = useState<DrawerPosition>("right")
   const [activeText, setActiveText] = useState("")
+  const [scrollbarWidth, setScrollbarWidth] = useState(0)
 
   /** 取得螢幕方向決定 Drawer 位置 */
   const getAutoPosition = (): DrawerPosition => {
     return window.innerWidth > window.innerHeight ? "right" : "bottom"
   }
 
+  /** 偵測捲軸寬度以避免位移 */
+  useEffect(() => {
+    if (isDrawerOpen) {
+      const width = window.innerWidth - document.documentElement.clientWidth
+      setScrollbarWidth(width > 0 ? width : 0)
+    }
+  }, [isDrawerOpen])
+
   /** 當選取文字或區域改變時，更新小點點位置 */
   useEffect(() => {
     if (selectedText && selectionRect && !isDrawerOpen) {
+      // 改為跟隨頁面捲動的 absolute 定位
       setDotPosition({
-        top: selectionRect.bottom + 8,
-        left: selectionRect.right - 10
+        top: selectionRect.bottom + window.scrollY + 8,
+        left: selectionRect.right + window.scrollX - 10
       })
       setDotVisible(true)
     } else {
@@ -71,12 +81,23 @@ const TranslatorUI: React.FC = () => {
 
     if (isDrawerOpen) {
       push()
+      // 確保選取文字在可視範圍
+      if (selectionRect) {
+        const isRight = drawerPosition === "right"
+        const scrollTarget = isRight
+          ? selectionRect.top + window.scrollY - 100
+          : selectionRect.top + window.scrollY - 50
+        window.scrollTo({
+          top: Math.max(0, scrollTarget),
+          behavior: "smooth"
+        })
+      }
     } else {
       restore()
     }
 
     return restore
-  }, [isDrawerOpen, drawerPosition])
+  }, [isDrawerOpen, drawerPosition, selectionRect])
 
   /** 監視視窗大小改變位置 */
   useEffect(() => {
@@ -101,6 +122,17 @@ const TranslatorUI: React.FC = () => {
     translateText(selectedText)
   }, [selectedText, activeText, isDrawerOpen])
 
+  /** 當設定（語言或工具）變更時，若 Drawer 開啟則重新翻譯 */
+  useEffect(() => {
+    if (isDrawerOpen && activeText) {
+      translateText(activeText)
+    }
+  }, [
+    settings.currentLanguage,
+    settings.languageConfigs[settings.currentLanguage]?.selectedTools,
+    isDrawerOpen
+  ])
+
   const handleDotClick = () => {
     setDotVisible(false)
     setIsDrawerOpen(true)
@@ -112,6 +144,8 @@ const TranslatorUI: React.FC = () => {
     clearSelection()
   }
 
+  const isRight = drawerPosition === "right"
+
   return (
     <>
       <BlueDot
@@ -121,12 +155,24 @@ const TranslatorUI: React.FC = () => {
         left={dotPosition.left}
       />
       {isDrawerOpen && (
-        <Drawer
-          position={drawerPosition}
-          results={results}
-          selectedText={activeText}
-          onClose={handleClose}
-        />
+        <div
+          style={{
+            position: "fixed",
+            zIndex: 2147483647,
+            right: isRight ? `${scrollbarWidth}px` : 0,
+            bottom: isRight ? 0 : `${scrollbarWidth}px`,
+            top: 0,
+            left: isRight ? "auto" : 0,
+            width: isRight ? `${DRAWER_SIZE}px` : "100%",
+            height: isRight ? "100%" : `${DRAWER_SIZE}px`
+          }}>
+          <Drawer
+            position={drawerPosition}
+            results={results}
+            selectedText={activeText}
+            onClose={handleClose}
+          />
+        </div>
       )}
     </>
   )

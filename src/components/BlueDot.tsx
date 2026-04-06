@@ -23,7 +23,7 @@ const BlueDot: React.FC<BlueDotProps> = ({ visible, onClick, top, left }) => {
   return (
     <button
       onClick={onClick}
-      className="tp-fixed tp-w-6 tp-h-6 tp-rounded-full tp-bg-blue-500 tp-border-2 tp-border-solid tp-border-white tp-shadow-dot tp-cursor-pointer tp-z-[2147483646] tp-p-0 tp-transition-all tp-duration-200 tp-ease-[cubic-bezier(0.175,0.885,0.32,1.275)] tp-animate-fade-in hover:tp-scale-125 hover:tp-shadow-dot-hover"
+      className="tp-absolute tp-w-6 tp-h-6 tp-rounded-full tp-bg-blue-500 tp-border-2 tp-border-solid tp-border-white tp-shadow-dot tp-cursor-pointer tp-z-[2147483646] tp-p-0 tp-transition-all tp-duration-200 tp-ease-[cubic-bezier(0.175,0.885,0.32,1.275)] tp-animate-fade-in hover:tp-scale-125 hover:tp-shadow-dot-hover"
       style={{
         top: `${top}px`,
         left: `${left}px`
