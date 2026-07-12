@@ -23,6 +23,8 @@ interface UseTranslationReturn {
     language: SourceLanguage,
     tools: TranslationToolId[]
   ) => Promise<void>
+  /** 清除目前的翻譯結果 */
+  clearResults: () => void
 }
 
 export function useTranslation(): UseTranslationReturn {
@@ -100,5 +102,10 @@ export function useTranslation(): UseTranslationReturn {
     []
   )
 
-  return { results, isTranslating, translate }
+  /** 清除翻譯結果 */
+  const clearResults = useCallback(() => {
+    setResults([])
+  }, [])
+
+  return { results, isTranslating, translate, clearResults }
 }

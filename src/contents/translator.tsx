@@ -1,3 +1,4 @@
+import cssText from "data-text:~styles/globals.css"
 import type { PlasmoCSConfig } from "plasmo"
 import React, { useEffect, useState } from "react"
 
@@ -8,7 +9,6 @@ import { useTextSelection } from "~src/hooks/useTextSelection"
 import { useTranslation } from "~src/hooks/useTranslation"
 import type { DrawerPosition } from "~src/types"
 import { DRAWER_SIZE } from "~src/utils/constants"
-import cssText from "data-text:~styles/globals.css"
 
 export const getStyle = () => {
   const style = document.createElement("style")
@@ -25,7 +25,7 @@ const TranslatorUI: React.FC = () => {
   // 1. 採用封裝好的 Hooks
   const { settings } = useSettings()
   const { selectedText, selectionRect, clearSelection } = useTextSelection()
-  const { results, translate } = useTranslation()
+  const { results, translate, clearResults } = useTranslation()
 
   // 2. 本地 UI 狀態
   const [dotVisible, setDotVisible] = useState(false)
@@ -142,6 +142,8 @@ const TranslatorUI: React.FC = () => {
   const handleClose = () => {
     setIsDrawerOpen(false)
     clearSelection()
+    setActiveText("")
+    clearResults()
   }
 
   const isRight = drawerPosition === "right"
