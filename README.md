@@ -1,33 +1,58 @@
-This is a [Plasmo extension](https://docs.plasmo.com/) project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
+# 翻譯瀏覽器插件 (Translate Browser Plugin)
 
-## Getting Started
+## 簡介
 
-First, run the development server:
+本專案為一款瀏覽器擴充功能，主要用於輔助網頁瀏覽時的即時翻譯與語言學習。使用者在網頁上選取單字或句子時，可快速獲取翻譯釋義、發音音標與詳細詞典解析，提升閱讀外語網頁與學習的效率。
+
+---
+
+## 開發與打包
+
+### 1. 開發模式
+
+執行以下指令啟動開發伺服器：
 
 ```bash
-pnpm dev
-# or
 npm run dev
+# 或使用 pnpm
+pnpm dev
 ```
 
-Open your browser and load the appropriate development build. For example, if you are developing for the chrome browser, using manifest v3, use: `build/chrome-mv3-dev`.
+**載入方式：**
+1. 開啟 Chrome 或基於 Chromium 的瀏覽器，前往擴充功能管理頁面（於網址列輸入 `chrome://extensions/`）。
+2. 開啟右上角的「**開發者模式**」。
+3. 點擊「**載入未封裝項目**」，選取本專案目錄產生的 `build/chrome-mv3-dev` 資料夾即可完成載入。
 
-You can start editing the popup by modifying `popup.tsx`. It should auto-update as you make changes. To add an options page, simply add a `options.tsx` file to the root of the project, with a react component default exported. Likewise to add a content page, add a `content.ts` file to the root of the project, importing some module and do some logic, then reload the extension on your browser.
+---
 
-For further guidance, [visit our Documentation](https://docs.plasmo.com/)
+### 2. 打包方式
 
-## Making production build
-
-Run the following:
+執行以下指令進行正式版本打包：
 
 ```bash
-pnpm build
-# or
 npm run build
+# 或使用 pnpm
+pnpm build
 ```
 
-This should create a production bundle for your extension, ready to be zipped and published to the stores.
+**載入方式：**
+1. 打包完成後，輸出檔案會生成於 `build/chrome-mv3-prod` 資料夾。
+2. 於瀏覽器擴充功能管理頁面（`chrome://extensions/`）在開啟「**開發者模式**」的情況下，點擊「**載入未封裝項目**」，選取 `build/chrome-mv3-prod` 資料夾進行載入與驗證。
+3. （可選）若需產出供商店上架的 zip 壓縮檔，可執行 `npm run package`。
 
-## Submit to the webstores
+---
 
-The easiest way to deploy your Plasmo extension is to use the built-in [bpp](https://bpp.browser.market) GitHub action. Prior to using this action however, make sure to build your extension and upload the first version to the store to establish the basic credentials. Then, simply follow [this setup instruction](https://docs.plasmo.com/framework/workflows/submit) and you should be on your way for automated submission!
+## 功能
+
+參考專案提交紀錄（Commit logs），目前支援的核心功能如下：
+
+- **文字選取追蹤與快捷翻譯**：於網頁選取文字時自動追蹤定位，並提供快捷浮動小點供使用者快速觸發翻譯。
+- **選取文字螢光筆高亮**：觸發翻譯時自動對選取的目標文字套用黃色螢光筆高亮效果，便於回顧與對照原文。
+- **劍橋詞典（Cambridge Dictionary）結構化翻譯**：
+  - 支援查詢劍橋詞典之音標、詞性、結構化釋義與例句。
+  - 具備 403 請求限制與例外錯誤處理機制。
+- **側邊抽屜面板（Drawer）與位置偏好記憶**：
+  - 優雅的側邊抽屜式翻譯結果呈現介面。
+  - 支援手動切換面板位置（左側 / 右側），並將設定持久化儲存。
+  - 關閉面板時自動清除翻譯結果與暫存狀態，保持介面乾淨。
+- **設定即時同步**：支援擴充功能設定與分頁內容腳本（Content Scripts）間的即時響應與狀態同步。
