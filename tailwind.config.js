@@ -29,6 +29,7 @@ module.exports = {
       animation: {
         "fade-in": "fadeIn 0.2s ease-in-out",
         "slide-in-right": "slideInRight 0.3s ease-out",
+        "slide-in-left": "slideInLeft 0.3s ease-out",
         "slide-in-bottom": "slideInBottom 0.3s ease-out",
         spin: "spin 1s linear infinite"
       },
@@ -41,6 +42,10 @@ module.exports = {
           "0%": { transform: "translateX(100%)" },
           "100%": { transform: "translateX(0)" }
         },
+        slideInLeft: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(0)" }
+        },
         slideInBottom: {
           "0%": { transform: "translateY(100%)" },
           "100%": { transform: "translateY(0)" }
@@ -50,6 +55,7 @@ module.exports = {
         dot: "0 4px 12px rgba(59, 130, 246, 0.4)",
         "dot-hover": "0 4px 12px rgba(59, 130, 246, 0.6), 0 0 0 2px rgba(59, 130, 246, 0.4)",
         "drawer-right": "-4px 0 24px rgba(0, 0, 0, 0.08)",
+        "drawer-left": "4px 0 24px rgba(0, 0, 0, 0.08)",
         "drawer-bottom": "0 -4px 24px rgba(0, 0, 0, 0.08)"
       }
     }

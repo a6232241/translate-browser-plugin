@@ -4,10 +4,10 @@ import React, { useEffect, useState } from "react"
 
 import BlueDot from "~src/components/BlueDot"
 import Drawer from "~src/components/Drawer"
+import { useDrawerPosition } from "~src/hooks/useDrawerPosition"
 import { useSettings } from "~src/hooks/useSettings"
 import { useTextSelection } from "~src/hooks/useTextSelection"
 import { useTranslation } from "~src/hooks/useTranslation"
-import type { DrawerPosition } from "~src/types"
 import { DRAWER_SIZE } from "~src/utils/constants"
 
 export const getStyle = () => {
@@ -27,18 +27,15 @@ const TranslatorUI: React.FC = () => {
   const { selectedText, selectionRect, clearSelection } = useTextSelection()
   const { results, translate, clearResults } = useTranslation()
 
-  // 2. 本地 UI 狀態
+  // 2. 面板位置：使用持久化 hook，預設右側
+  const { drawerPosition, setDrawerPosition } = useDrawerPosition()
+
+  // 3. 本地 UI 狀態
   const [dotVisible, setDotVisible] = useState(false)
   const [dotPosition, setDotPosition] = useState({ top: 0, left: 0 })
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const [drawerPosition, setDrawerPosition] = useState<DrawerPosition>("right")
   const [activeText, setActiveText] = useState("")
   const [scrollbarWidth, setScrollbarWidth] = useState(0)
-
-  /** 取得螢幕方向決定 Drawer 位置 */
-  const getAutoPosition = (): DrawerPosition => {
-    return window.innerWidth > window.innerHeight ? "right" : "bottom"
-  }
 
   /** 偵測捲軸寬度以避免位移 */
   useEffect(() => {
@@ -62,51 +59,41 @@ const TranslatorUI: React.FC = () => {
     }
   }, [selectedText, selectionRect, isDrawerOpen])
 
-  /** 擠壓頁面邏輯 */
+  /** 擠壓頁面邏輯：根據面板位置設定 body margin */
   useEffect(() => {
     const push = () => {
       document.body.style.transition = "margin 0.3s ease"
       if (drawerPosition === "right") {
         document.body.style.marginRight = `${DRAWER_SIZE}px`
+        document.body.style.marginLeft = ""
+        document.body.style.marginBottom = ""
+      } else if (drawerPosition === "left") {
+        document.body.style.marginLeft = `${DRAWER_SIZE}px`
+        document.body.style.marginRight = ""
+        document.body.style.marginBottom = ""
       } else {
+        // bottom
         document.body.style.marginBottom = `${DRAWER_SIZE}px`
+        document.body.style.marginRight = ""
+        document.body.style.marginLeft = ""
       }
     }
 
     const restore = () => {
       document.body.style.transition = "margin 0.3s ease"
       document.body.style.marginRight = ""
+      document.body.style.marginLeft = ""
       document.body.style.marginBottom = ""
     }
 
     if (isDrawerOpen) {
       push()
-      // 確保選取文字在可視範圍
-      if (selectionRect) {
-        const isRight = drawerPosition === "right"
-        const scrollTarget = isRight
-          ? selectionRect.top + window.scrollY - 100
-          : selectionRect.top + window.scrollY - 50
-        window.scrollTo({
-          top: Math.max(0, scrollTarget),
-          behavior: "smooth"
-        })
-      }
     } else {
       restore()
     }
 
     return restore
-  }, [isDrawerOpen, drawerPosition, selectionRect])
-
-  /** 監視視窗大小改變位置 */
-  useEffect(() => {
-    const handleResize = () => {
-      setDrawerPosition(getAutoPosition())
-    }
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [])
+  }, [isDrawerOpen, drawerPosition])
 
   const translateText = (text: string) => {
     // 採用 useTranslation 提供的翻譯功能
@@ -136,7 +123,6 @@ const TranslatorUI: React.FC = () => {
   const handleDotClick = () => {
     setDotVisible(false)
     setIsDrawerOpen(true)
-    setDrawerPosition(getAutoPosition())
   }
 
   const handleClose = () => {
@@ -147,6 +133,7 @@ const TranslatorUI: React.FC = () => {
   }
 
   const isRight = drawerPosition === "right"
+  const isLeft = drawerPosition === "left"
 
   return (
     <>
@@ -161,18 +148,23 @@ const TranslatorUI: React.FC = () => {
           style={{
             position: "fixed",
             zIndex: 2147483647,
-            right: isRight ? `${scrollbarWidth}px` : 0,
-            bottom: isRight ? 0 : `${scrollbarWidth}px`,
+            // 右側：靠右對齊，留滾動條寬度
+            right: isRight ? `${scrollbarWidth}px` : isLeft ? "auto" : 0,
+            // 左側：靠左對齊，留滾動條寬度
+            left: isLeft ? `${scrollbarWidth}px` : isRight ? "auto" : 0,
+            // 下方：靠底部，留滾動條高度
+            bottom: isRight || isLeft ? 0 : `${scrollbarWidth}px`,
             top: 0,
-            left: isRight ? "auto" : 0,
-            width: isRight ? `${DRAWER_SIZE}px` : "100%",
-            height: isRight ? "100%" : `${DRAWER_SIZE}px`
+            width:
+              isRight || isLeft ? `${DRAWER_SIZE}px` : "100%",
+            height: isRight || isLeft ? "100%" : `${DRAWER_SIZE}px`
           }}>
           <Drawer
             position={drawerPosition}
             results={results}
             selectedText={activeText}
             onClose={handleClose}
+            onPositionChange={setDrawerPosition}
           />
         </div>
       )}

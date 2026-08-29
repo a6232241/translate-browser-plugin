@@ -79,3 +79,6 @@ export const AUTO_SAVE_DELAY = 500
 
 /** Storage 鍵名 */
 export const STORAGE_KEY = "translate-plugin-settings"
+
+/** Drawer 位置偏好的 Storage 鍵名 */
+export const DRAWER_POSITION_KEY = "translate-plugin-drawer-position"

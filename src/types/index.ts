@@ -77,7 +77,7 @@ export interface TranslationResult {
 }
 
 /** Drawer 的顯示方向 */
-export type DrawerPosition = "right" | "bottom"
+export type DrawerPosition = "right" | "left" | "bottom"
 
 /** 翻譯請求（傳給 Background SW） */
 export interface TranslateRequest {
