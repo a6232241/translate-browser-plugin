@@ -24,7 +24,8 @@ export const config: PlasmoCSConfig = {
 const TranslatorUI: React.FC = () => {
   // 1. 採用封裝好的 Hooks
   const { settings } = useSettings()
-  const { selectedText, selectionRect, clearSelection } = useTextSelection()
+  const { selectedText, selectionRect, applyHighlight, clearSelection } =
+    useTextSelection()
   const { results, translate, clearResults } = useTranslation()
 
   // 2. 面板位置：使用持久化 hook，預設右側
@@ -105,6 +106,8 @@ const TranslatorUI: React.FC = () => {
   useEffect(() => {
     if (!selectedText || !isDrawerOpen || selectedText === activeText) return
 
+    // 翻譯前先套用黃色 highlight（涵蓋點藍點與 Drawer 已開啟時再選文字兩種情境）
+    applyHighlight()
     setActiveText(selectedText)
     translateText(selectedText)
   }, [selectedText, activeText, isDrawerOpen])
@@ -121,6 +124,7 @@ const TranslatorUI: React.FC = () => {
   ])
 
   const handleDotClick = () => {
+    // highlight 將在 useEffect 偵測到 isDrawerOpen + selectedText 後統一套用
     setDotVisible(false)
     setIsDrawerOpen(true)
   }
